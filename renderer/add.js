@@ -13,6 +13,10 @@ $('select-music').addEventListener('click', () => {
 
 $('add-music').addEventListener('click', () => {
     ipcRenderer.send('add-tracks', musicFilePath)
+    // 导入歌曲后关闭窗口
+    if (musicFilePath.length) {
+        ipcRenderer.send('close-add')
+    }
 })
 const renderList = (pathes) => {
     const musicList = $('musicList')

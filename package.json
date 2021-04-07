@@ -10,7 +10,7 @@
   "build": {
     "appId": "aSimpleLocalPlayer",
     "mac": {
-      "category":"public.app-category.productivity"
+      "category": "public.app-category.productivity"
     },
     "dmg": {
       "background": "build/app.png",
@@ -57,6 +57,7 @@
   "devDependencies": {
     "electron": "^12.0.2",
     "electron-builder": "^22.10.5",
+    "electron-builder-squirrel-windows": "^22.10.5",
     "nodemon": "^2.0.7"
   },
   "dependencies": {

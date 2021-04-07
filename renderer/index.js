@@ -45,7 +45,7 @@ const renderPlayer = (name, duration) => {
 }
 
 const renderProgress = (currentTime, duration) => {
-    const progress = Math.floor(currentTime / duration * 100)
+    const progress = Math.ceil(currentTime / duration * 100)
     const bar = $('player-progress')
     bar.innerHTML = progress + '%'
     bar.style.width = progress + '%'
@@ -97,6 +97,18 @@ $('tracksList').addEventListener('click', (event) => {
         classList.replace('fa-pause', 'fa-play')
     } else if (id && classList.contains('fa-trash')) {
         // 删除事件
+        if (currentTrack && currentTrack.id === id) {
+            musicAudio.pause()
+            renderPlayer('', 0)
+            renderProgress(0, 0)
+        }
         ipcRenderer.send('delete-track', id)
     }
+})
+
+const ppdom = $('progress')
+ppdom.addEventListener('mousedown', (event) => {
+    renderProgress(event.offsetX, ppdom.getBoundingClientRect().width)
+    const progress = event.offsetX / ppdom.getBoundingClientRect().width
+    musicAudio.currentTime = progress * musicAudio.duration
 })

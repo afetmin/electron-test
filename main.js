@@ -8,6 +8,8 @@ const DataStore = require('./musicDataStore')
 const myStore = new DataStore({
   'name': 'Music Data'
 })
+
+let addWindow
 class AppWindow extends BrowserWindow {
   constructor(config, fileLocation) {
     const basicConfig = {
@@ -36,7 +38,7 @@ app.on('ready', () => {
     mainWindow.send('get-tracks', myStore.getTracks())
   })
   ipcMain.on('add-music-window', () => {
-    const addWindow = new AppWindow({
+    addWindow = new AppWindow({
       width: 600,
       height: 400,
       parent: mainWindow
@@ -63,5 +65,8 @@ app.on('ready', () => {
         event.reply('selected-files', files)
       }
     })
+  })
+  ipcMain.on('close-add', () => {
+    addWindow.hide()
   })
 })
