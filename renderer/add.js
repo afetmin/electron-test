@@ -5,9 +5,14 @@ const {
     $
 } = require('./helper')
 const path = require('path')
+let musicFilePath = []
 
 $('select-music').addEventListener('click', () => {
     ipcRenderer.send('open-music-file')
+})
+
+$('add-music').addEventListener('click', () => {
+    ipcRenderer.send('add-tracks', musicFilePath)
 })
 const renderList = (pathes) => {
     const musicList = $('musicList')
@@ -23,5 +28,6 @@ ipcRenderer.on('selected-files', (event, files) => {
     } = files
     if (Array.isArray(filePaths)) {
         renderList(filePaths)
+        musicFilePath = filePaths
     }
 })

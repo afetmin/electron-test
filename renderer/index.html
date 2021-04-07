@@ -6,11 +6,14 @@
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
   <title>本地播放器</title>
   <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./index.css">
+  <script src="https://kit.fontawesome.com/0f93c0ab3e.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <div class="container mt-4">
     <h1>我的播放器</h1>
+    <div id="tracksList" class="mt-4"></div>
     <button type="button" id="add-music-button" class="btn btn-primary btn-lg btn-block mt-4">添加歌曲到曲库</button>
   </div>
   <script>
