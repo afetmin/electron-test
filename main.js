@@ -1,29 +1,54 @@
 const {
   app,
   BrowserWindow,
-  ipcMain
+  ipcMain,
+  dialog
 } = require('electron')
 
-app.on('ready', () => {
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-    }
-  })
-  mainWindow.loadFile('./renderer/index.html')
-  ipcMain.on('add-music-window', () => {
-    const addWindow = new BrowserWindow({
-      width: 600,
-      height: 400,
+
+class AppWindow extends BrowserWindow {
+  constructor(config, fileLocation) {
+    const basicConfig = {
+      width: 800,
+      height: 600,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
-      },
-      parent: mainWindow
+      }
+    }
+    const finalConfig = {
+      ...basicConfig,
+      ...config
+    }
+    super(finalConfig)
+    this.loadFile(fileLocation)
+    this.once('ready-to-show', () => {
+      this.show()
     })
-    addWindow.loadFile('./renderer/add.html')
+  }
+}
+
+app.on('ready', () => {
+  const mainWindow = new AppWindow({}, './renderer/index.html')
+  ipcMain.on('add-music-window', () => {
+    const addWindow = new AppWindow({
+      width: 600,
+      height: 400,
+      parent: mainWindow
+    }, './renderer/add.html')
+  })
+  ipcMain.on('open-music-file', (event) => {
+    dialog.showOpenDialog({
+      properties: ['openFile', 'multiSelections'],
+      filters: [{
+        name: 'Music',
+        extensions: ['mp3', 'flac']
+      }, ]
+    }).then((files) => {
+      if (files) {
+        console.log(files);
+        event.reply('selected-files', files)
+      }
+    })
   })
 })
