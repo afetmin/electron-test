@@ -15,6 +15,13 @@
     <h1>我的播放器</h1>
     <div id="tracksList" class="mt-4"></div>
     <button type="button" id="add-music-button" class="btn btn-primary btn-lg btn-block mt-4">添加歌曲到曲库</button>
+    <div class="container fixed-bottom bg-white pb-3">
+      <hr />
+      <div class="row mr-2 mb-2" id="player-status"></div>
+      <div class="progress">
+        <div class="progress-bar" id="player-progress" role="progressbar" style="width: 0%;">0%</div>
+      </div>
+    </div>
   </div>
   <script>
     require('./index.js')
