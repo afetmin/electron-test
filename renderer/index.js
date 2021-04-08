@@ -108,7 +108,9 @@ $('tracksList').addEventListener('click', (event) => {
 
 const ppdom = $('progress')
 ppdom.addEventListener('mousedown', (event) => {
-    renderProgress(event.offsetX, ppdom.getBoundingClientRect().width)
-    const progress = event.offsetX / ppdom.getBoundingClientRect().width
+    const offsetX = event.offsetX
+    const width = ppdom.getBoundingClientRect().width
+    renderProgress(offsetX, width)
+    const progress = offsetX / width
     musicAudio.currentTime = progress * musicAudio.duration
 })
